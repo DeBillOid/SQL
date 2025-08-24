@@ -1,0 +1,106 @@
+Задание 6(2).
+Для каждого производителя, выпускающего ПК-блокноты c объёмом жесткого диска не менее 10 Гбайт, найти скорости таких ПК-блокнотов. Вывод: производитель, скорость.
+
+Решение:
+SELECT DISTINCT MAKER, SPEED
+FROM PRODUCT JOIN LAPTOP ON PRODUCT.MODEL = LAPTOP.MODEL
+WHERE HD >= '10'
+
+
+
+Задание 7(2).
+Найдите номера моделей и цены всех имеющихся в продаже продуктов (любого типа) производителя B (латинская буква).
+
+Решение:
+SELECT DISTINCT PC.MODEL, PRICE 
+FROM PRODUCT JOIN PC ON PRODUCT.MODEL = PC.MODEL
+WHERE MAKER = 'B'
+UNION
+SELECT DISTINCT LAPTOP.MODEL, PRICE
+FROM PRODUCT JOIN LAPTOP ON PRODUCT.MODEL = LAPTOP.MODEL
+WHERE MAKER = 'B'
+UNION
+SELECT DISTINCT PRINTER.MODEL, PRICE
+FROM PRODUCT JOIN PRINTER ON PRODUCT.MODEL=PRINTER.MODEL
+WHERE MAKER = 'B'
+
+
+
+Задание 8(2).
+Найдите производителя, выпускающего ПК, но не ПК-блокноты.
+
+Решение:
+SELECT DISTINCT MAKER
+FROM PRODUCT
+WHERE TYPE IN ('PC')
+EXCEPT
+SELECT DISTINCT MAKER
+FROM PRODUCT
+WHERE TYPE IN ('LAPTOP')
+
+
+
+Задание 9(1).
+Найдите производителей ПК с процессором не менее 450 Мгц. Вывести: Maker
+
+Решение:
+SELECT DISTINCT MAKER
+FROM PRODUCT JOIN PC ON PRODUCT.MODEL = PC.MODEL
+WHERE SPEED >= '450'
+
+
+
+Задание 10(1).
+Найдите модели принтеров, имеющих самую высокую цену. Вывести: model, price
+Решение:
+SELECT MODEL, PRICE
+FROM PRINTER
+WHERE PRICE = (SELECT MAX(PRICE) FROM PRINTER)
+
+
+
+Задание 11(1).
+Найдите среднюю скорость ПК.
+
+Решение:
+SELECT AVG(SPEED) AS AVG_SPEED
+FROM PC
+
+
+
+Задание 12(1).
+Найдите среднюю скорость ПК-блокнотов, цена которых превышает 1000 дол.
+
+Решение:
+SELECT AVG(SPEED) AS AVG_SPEED
+FROM LAPTOP
+WHERE PRICE > '1000'
+Задание 13(1).
+Найдите среднюю скорость ПК, выпущенных производителем A.
+Решение:
+SELECT AVG(SPEED) AS AVG_SPEED
+FROM PRODUCT JOIN PC ON PRODUCT.MODEL = PC.MODEL
+WHERE MAKER = 'A'
+
+
+
+Задание 14(2).
+Найдите класс, имя и страну для кораблей из таблицы Ships, имеющих не менее 10 орудий.
+
+Решение:
+SELECT CLASSES.CLASS, NAME, COUNTRY
+FROM CLASSES JOIN SHIPS ON CLASSES.CLASS = SHIPS.CLASS
+WHERE NUMGUNS >= '10'
+
+
+
+Задание 15(2).
+Найдите размеры жестких дисков, совпадающих у двух и более PC. Вывести: HD
+
+Решение:
+SELECT HD
+FROM PC
+GROUP BY HD
+HAVING COUNT (HD)>=2
+
+
